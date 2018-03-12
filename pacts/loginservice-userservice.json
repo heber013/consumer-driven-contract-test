@@ -1,0 +1,35 @@
+{
+  "consumer": {
+    "name": "LoginService"
+  },
+  "provider": {
+    "name": "UserService"
+  },
+  "interactions": [
+    {
+      "description": "a request for User1",
+      "providerState": "User1 exists and is not an administrator",
+      "request": {
+        "method": "get",
+        "path": "/users/User1"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "data": [
+            "User1",
+            123,
+            "Editor"
+          ]
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+version: "3"
+services:
+  api:
+    build: .
+    networks:
+      pactnw: {}
+    command: users.py
+    volumes:
+      - ./users.json:/users/users.json
+    ports:
+      - "5002:5002"
+
+  testing_states:
+    build: .
+    networks:
+      pactnw: {}
+    command: provider_states.py
+    volumes:
+      - ./users.json:/users/users.json
+    ports:
+      - "5000:5000"
+
+  pactverifier:
+    image: dius/pact-provider-verifier-docker
+    networks:
+      pactnw: {}
+    depends_on:
+      - api
+      - testing_states
+    links:
+    - api:api
+    - testing_states:testing_states
+    volumes:
+      - ../pacts:/tmp/pacts
+    environment:
+    - pact_urls=/tmp/pacts/loginservice-userservice.json
+    - provider_base_url=http://api:5002
+    - provider_states_url=http://testing_states:5000/provider_states
+    - provider_states_active_url=http://testing_states:5000/provider_states/active
+
+networks:
+  pactnw:
+    driver: bridge
