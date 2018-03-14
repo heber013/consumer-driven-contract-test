@@ -4,6 +4,11 @@ Sample project to set up contract testing using `python implementation <https://
 
 In this example the Consumer is LoginService and the provider is UserService, both in the same repository for simplicity.
 
+Prerequisites
+-------------
+- Docker
+- Docker compose
+
 Run contract tests in consumer service
 --------------------------------------
 The first part of contract testing is to run the tests on the consumer side in order to generate the pact files,
