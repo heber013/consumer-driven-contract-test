@@ -19,6 +19,6 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
-scripts:
+script:
   - cd login_service;docker-compose up --build;cd -
   - cd user_service;docker-compose up --build;cd -
