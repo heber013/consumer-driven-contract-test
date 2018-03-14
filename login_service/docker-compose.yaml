@@ -1,0 +1,7 @@
+version: "3"
+services:
+  run_contract_tests:
+    build: .
+    command: python3 -m unittest discover contract_tests/
+    volumes:
+      - ../pacts:/login/pacts

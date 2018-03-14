@@ -1,11 +1,10 @@
 import atexit
 import unittest
+from unittest.mock import patch
 
 from pact import Consumer, Provider
 
-from login_service.user import get_user
-
-from unittest.mock import patch
+from user import get_user
 
 pact = Consumer('LoginService').has_pact_with(Provider('UserService'),
                                               host_name='localhost',
@@ -15,7 +14,7 @@ pact.start_service()
 atexit.register(pact.stop_service)
 
 
-class GetUserInfoContract(unittest.TestCase):
+class TestGetUserInfoContract(unittest.TestCase):
 
     def test_get_user(self):
         expected = {"data": ["User1", 123, "Editor"]}
@@ -27,7 +26,7 @@ class GetUserInfoContract(unittest.TestCase):
          .will_respond_with(200, body=expected))
         pact.setup()
         # Patch USERS_URL so that the service uses the mock server URL instead of the real URL.
-        with patch.dict('login_service.user.__dict__', {'USERS_URL': 'http://localhost:1234/users/'}):
+        with patch.dict('user.__dict__', {'USERS_URL': 'http://localhost:1234/users/'}):
             result = get_user('User1')
         pact.verify()
         self.assertEqual(result, expected)
