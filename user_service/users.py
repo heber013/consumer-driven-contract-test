@@ -1,9 +1,8 @@
 import json
 
-import os
-from flask import Flask
+from flask import Flask, Response
 from flask_restful import Resource, Api
-db_name = 'users.db'
+
 app = Flask(__name__)
 api = Api(app)
 
@@ -16,7 +15,7 @@ class Users(Resource):
             for line in _file:
                 if json.loads(line)['data'][0] == user_name:
                     return json.loads(line)
-        return {}
+        return Response(status=404)
 
 
 api.add_resource(Users, '/users/<user_name>')  # Route_1

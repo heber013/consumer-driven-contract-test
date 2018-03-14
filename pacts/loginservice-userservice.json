@@ -7,6 +7,20 @@
   },
   "interactions": [
     {
+      "description": "a request for User2",
+      "providerState": "User2 does not exist",
+      "request": {
+        "method": "get",
+        "path": "/users/User2"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+        },
+        "body": ""
+      }
+    },
+    {
       "description": "a request for User1",
       "providerState": "User1 exists and is not an administrator",
       "request": {

@@ -30,3 +30,18 @@ class TestGetUserInfoContract(unittest.TestCase):
             result = get_user('User1')
         pact.verify()
         self.assertEqual(result, expected)
+
+    def test_get_non_existing_user(self):
+        expected = ''
+
+        (pact
+         .given('User2 does not exist')
+         .upon_receiving('a request for User2')
+         .with_request('get', '/users/User2')
+         .will_respond_with(404, body=expected))
+        pact.setup()
+        # Patch USERS_URL so that the service uses the mock server URL instead of the real URL.
+        with patch.dict('user.__dict__', {'USERS_URL': 'http://localhost:1234/users/'}):
+            result = get_user('User2')
+        pact.verify()
+        self.assertEqual(result.text, expected)

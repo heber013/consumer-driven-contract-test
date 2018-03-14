@@ -10,13 +10,13 @@ def prepare_state(state):
         file_path = "users.json"
         with open(file_path, 'w') as _f:
             json.dump(row, _f)
-    if state == STATES[0]:
+    if state == STATES[0] or state == STATES[1]:
         write_to_file({"data": ["User1", 123, "Editor"]})
     else:
         print("State {} is not implemented".format(state))
 
 
-STATES = ['User1 exists and is not an administrator']
+STATES = ['User1 exists and is not an administrator', 'User2 does not exist']
 
 app = Flask(__name__)
 
