@@ -20,5 +20,5 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - cd login_service;docker-compose up;cd -
-  - cd user_service;docker-compose up;cd -
+  - cd login_service;docker-compose build;docker-compose run run_contract_tests;cd -
+  - cd user_service;docker-compose build;docker-compose run pactverifier;cd -
